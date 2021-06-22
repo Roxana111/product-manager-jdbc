@@ -23,7 +23,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void create(String name, double price, LocalDate bestBefore, double volume) {
-
+        if(productRepository.findByName(name)!=null){
+            throw new ProductExistsException("Product with name "+name+" already exists! ");
+        }
         Drink drink = new Drink(name, price, bestBefore, volume);
         productRepository.save(drink);
     }
